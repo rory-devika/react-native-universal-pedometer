@@ -8,11 +8,11 @@ React Native pedometer support for iOS version 8.0 and higher and Android. The m
 
 ### Installation
 
-1. `npm install --save @JWWon/react-native-universal-pedometer`
+1. `npm install --save @t2tx/react-native-universal-pedometer`
 
 > or `yarn add JWWon/react-native-universal-pedometer`
 
-2. `react-native link @JWWon/react-native-universal-pedometer`
+2. `react-native link @t2tx/react-native-universal-pedometer`
 
 > It will automatically do all necessary settings
 
@@ -32,13 +32,13 @@ add **NSMotionUsageDescription** on `ios/<your-project>/info.plist`
 ### General Usage
 
 ```js
-import Pedometer from '@JWWon/react-native-universal-pedometer';
+import Pedometer from '@t2tx/react-native-universal-pedometer';
 ```
 
 or
 
 ```js
-var Pedometer = require('@JWWon/react-native-universal-pedometer');
+var Pedometer = require('@t2tx/react-native-universal-pedometer');
 ```
 
 ### Methods
