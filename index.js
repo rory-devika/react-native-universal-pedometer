@@ -1,6 +1,6 @@
 'use strict';
 
-import { NativeEventEmitter, NativeModules } from 'react-native';
+import { NativeEventEmitter, NativeModules, Platform } from 'react-native';
 
 const { BMDPedometer } = NativeModules;
 
@@ -33,7 +33,17 @@ export default {
   },
 
   queryPedometerDataBetweenDates: (startDate, endDate, listener) => {
-    BMDPedometer.queryPedometerDataBetweenDates(startDate, endDate, listener);
+    if (Platform.OS === 'ios') {
+      BMDPedometer.queryPedometerDataBetweenDates(startDate, endDate, (err, pedometerData) => {
+        if (err) {
+          listener(err);
+        } else {
+          listener(pedometerData);
+        }
+      });
+    } else {
+      BMDPedometer.queryPedometerDataBetweenDates(startDate, endDate, listener);
+    }
   },
 
   stopPedometerUpdates: () => {
