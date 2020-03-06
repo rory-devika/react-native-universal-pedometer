@@ -16,7 +16,7 @@
     "universal",
     "pedometer"
   ],
-  "author": "Tei Jo",
+  "author": "t2isatx <t2isatx@gmail.com>",
   "license": "MIT",
   "types": "./lib/index.d.ts",
   "bugs": {
@@ -25,5 +25,6 @@
   "homepage": "https://github.com/t2tx/react-native-universal-pedometer#readme",
   "peerDependencies": {
     "react-native": ">=0.40.0"
-  }
+  },
+  "private": false
 }
