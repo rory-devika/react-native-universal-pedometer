@@ -5,14 +5,11 @@ export interface PedometerInterface {
   distance: number;
 }
 
-export interface PedometerErrorInterface {
-  code: number;
-  message: string;
-}
-
 type Callback = (error: string | null, available: boolean) => any;
 
-type Listener = (data: PedometerInterface | PedometerErrorInterface) => any;
+type Listener = (data: PedometerInterface | null) => any;
+
+type QueryCallback = (error: string | null, data: PedometerInterface | null) => any;
 
 declare const _default: {
   isStepCountingAvailable: (callback: Callback) => void;
@@ -21,7 +18,7 @@ declare const _default: {
   isPaceAvailable: (callback: Callback) => void;
   isCadenceAvailable: (callback: Callback) => void;
   startPedometerUpdatesFromDate: (date: number, listener: Listener) => void;
-  queryPedometerDataBetweenDates: (startDate: number, endDate: number, listener: Listener) => void;
+  queryPedometerDataBetweenDates: (startDate: number, endDate: number, callback: QueryCallback) => void;
   stopPedometerUpdates: () => void;
 };
 
