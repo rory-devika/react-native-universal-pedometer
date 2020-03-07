@@ -67,7 +67,7 @@ public class BMDPedometerModule extends ReactContextBaseJavaModule implements Se
       callback.invoke(null, true);
     } else {
       this.setStatus(BMDPedometerModule.ERROR_NO_SENSOR_FOUND);
-      callback.invoke("Error: step counting is not available", false);
+      callback.invoke("Error: step counting is not available. BMDPedometerModule.ERROR_NO_SENSOR_FOUND", false);
     }
   }
 
@@ -109,7 +109,12 @@ public class BMDPedometerModule extends ReactContextBaseJavaModule implements Se
 
   @ReactMethod
   public void queryPedometerDataBetweenDates(Integer startDate, Integer endDate, Callback callback) {
-    callback.invoke(this.getStepsParamsMap());
+    try {
+      callback.invoke(null, this.getStepsParamsMap());
+    } catch(Exception e) {
+      callback.invoke(e.getMessage(), null);
+    }
+
   }
 
   @Override
@@ -159,19 +164,26 @@ public class BMDPedometerModule extends ReactContextBaseJavaModule implements Se
 
       this.numSteps = steps - this.startNumSteps;
 
-      this.sendPedometerUpdateEvent(this.getStepsParamsMap());
+      try {
+        this.sendPedometerUpdateEvent(this.getStepsParamsMap());
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
 
     }else if(this.mSensor.getType() == Sensor.TYPE_ACCELEROMETER) {
       stepDetector.updateAccel(
           event.timestamp, event.values[0], event.values[1], event.values[2]);
-        
     }
   }
 
   @Override
   public void step(long timeNs) {
     this.numSteps++;
-    this.sendPedometerUpdateEvent(this.getStepsParamsMap());
+    try {
+      this.sendPedometerUpdateEvent(this.getStepsParamsMap());
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -199,22 +211,10 @@ public class BMDPedometerModule extends ReactContextBaseJavaModule implements Se
               this.setStatus(BMDPedometerModule.STARTING);
           } else {
               this.setStatus(BMDPedometerModule.ERROR_FAILED_TO_START);
-              this.sendPedometerUpdateEvent(
-                this.getErrorParamsMap(
-                  BMDPedometerModule.ERROR_FAILED_TO_START,
-                  "Device sensor returned an error."
-                )
-              );
               return;
           };
       } else {
           this.setStatus(BMDPedometerModule.ERROR_FAILED_TO_START);
-          this.sendPedometerUpdateEvent(
-            this.getErrorParamsMap(
-              BMDPedometerModule.ERROR_FAILED_TO_START,
-              "No sensors found to register step counter listening to."
-            )
-          );
           return;
       }
   }
@@ -241,14 +241,11 @@ public class BMDPedometerModule extends ReactContextBaseJavaModule implements Se
     // pedometerData.distance;
     // pedometerData.floorsAscended;
     // pedometerData.floorsDescended;
-    try {
-        map.putInt("startDate", (int)this.startAt);
-        map.putInt("endDate", (int)System.currentTimeMillis());
-        map.putDouble("numberOfSteps", this.numSteps);
-        map.putDouble("distance", this.numSteps * BMDPedometerModule.STEP_IN_METERS);
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
+    map.putInt("startDate", (int)this.startAt);
+    map.putInt("endDate", (int)System.currentTimeMillis());
+    map.putDouble("numberOfSteps", this.numSteps);
+    map.putDouble("distance", this.numSteps * BMDPedometerModule.STEP_IN_METERS);
+    
     return map;
   }
 
@@ -269,5 +266,4 @@ public class BMDPedometerModule extends ReactContextBaseJavaModule implements Se
       .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
       .emit("pedometerDataDidUpdate", params);
   }
-
 }
