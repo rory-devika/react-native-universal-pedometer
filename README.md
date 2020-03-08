@@ -51,7 +51,7 @@ var Pedometer = require('@t2tx/react-native-universal-pedometer');
 | `isPaceAvailable`                | callback: `Callback`                                         |                                                              |
 | `isCadenceAvailable`             | callback: `Callback`                                         |                                                              |
 | `startPedometerUpdatesFromDate`  | date: `Date.getTime()`, listener: `Listener`                 | start tracking from current time                             |
-| `queryPedometerDataBetweenDates` | startDate: `Date.getTime()`, endDate: `Date.getTime()`, listener: `Listener` | query pedometer data from selected date to other selected date |
+| `queryPedometerDataBetweenDates` | startDate: `Date.getTime()`, endDate: `Date.getTime()`, callback: `QueryCallback` | query pedometer data from selected date to other selected date |
 | `stopPedometerUpdates`           |                                                              | stop pedometer updates                                       |
 
 ### Types
@@ -59,7 +59,7 @@ var Pedometer = require('@t2tx/react-native-universal-pedometer');
 | Type Name                 | Interface                                                    |
 | ------------------------- | ------------------------------------------------------------ |
 | `PedometerInterface`      | `{ startDate: nubmer; endDate: number; numberOfSteps: number; distance: number; }` |
-| `PedometerErrorInterface` | `{ code: number; message: string; }`                         |
 | `Callback`                | `(error: string or null, avaliable: boolean) => any`         |
-| `Listener`                | `(data: PedometerInterface or PedometerErrorInterface) => any` |
+| `Listener`                | `(data: PedometerInterface) => any` |
+| `QueryCallback`                | `(error: string or null, data: PedometerInterface or null) => any` |
 
