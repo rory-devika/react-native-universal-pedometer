@@ -1,6 +1,6 @@
 {
   "name": "@t2tx/react-native-universal-pedometer",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "React Native universal pedometer. This is a fork from @JWWon/react-native-universal-pedometer.",
   "main": "index.js",
   "scripts": {
