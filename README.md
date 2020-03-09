@@ -16,9 +16,7 @@ React Native pedometer support for iOS version 8.0 and higher and Android. The m
 
 > or `yarn add @t2tx/react-native-universal-pedometer`
 
-2. `react-native link @t2tx/react-native-universal-pedometer`
-
-> It will automatically do all necessary settings
+2. `cd ios && pod install && cd ..`
 
 ##### iOS Configuration
 
